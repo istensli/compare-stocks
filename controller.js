@@ -211,11 +211,21 @@ function getGicSectors(){
 	let sectors = [];
 	for(company of model.inputs.fundamentals){
 		console.log('selskap:'+ company.General.Code + 'sector' + company.General.GicSector);
+		console.log(model.inputs.fundamentals);
 		if(!checkIfArrayContainsGicSector(sectors, company.General.GicSector)){
 			
 			sectors.push(company.General.GicSector);
 		}
 	}
 	return sectors;
+
+}
+
+
+
+function changeGicToShow(sector){
+	model.app.showCompaniesWithGic = true;
+	model.app.sectorToShow = sector;
+	updateView();
 
 }

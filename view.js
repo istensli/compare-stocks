@@ -79,11 +79,11 @@ function fundamentalsView() {
     html +=/*html*/`<h3>Se mest handlede innenfor sektorer:</h3>`;
 
     for(sector of getGicSectors()){
-        html += /*html*/`<button>${sector}</button>`;
+        html += /*html*/`<button onclick="changeGicToShow('${sector}')">${sector}</button>`;
     }
     console.log(getGicSectors());
 
-
+    html += showCompaniesWithGic();
     html += '</div>';
     return html;
 }
@@ -252,6 +252,55 @@ function fundamentalData() {
 }
 
 //veien videre?? - sammenligne selskaper, velge selskap fra dropdown-meny? - 
+
+
+
+
+function showCompaniesWithGic(){
+    let gicSector = model.app.sectorToShow;
+    if(!model.app.showCompaniesWithGic) return '';
+
+    let listOfStocks = [];
+    for(company of model.inputs.fundamentals){
+        if(company.General.GicSector == gicSector){
+            let stock = getStockByTicker(company.General.Code);
+            listOfStocks.push(stock);
+            
+            console.log(stock);
+        }
+    }
+    console.log('Liste:' + listOfStocks);
+
+    let html = '<div>';
+    html += '<table>';
+    html += /*html*/`
+        <th>Code:</th>
+        <th>Close:</th>
+        <th>Change:</th>
+        <th>Change %:</th>
+        <th>High:</th>
+        <th>Low:</th>
+        <th>Volume:</th></tr>`;
+
+    for (let company of listOfStocks){
+        html += /*html*/`
+        <tr><td>${company.code}</td>
+        <td>${company.close}</td>
+        <td>${company.change}</td>
+        <td>${company.change_p}</td>
+        <td>${company.high}</td>
+        <td>${company.low}</td>
+        <td>${company.volume}</td></tr>`;
+    }
+    html += '</table></div>';
+    return html;
+
+
+
+}
+
+
+
 
 
 function compareStocksView(){

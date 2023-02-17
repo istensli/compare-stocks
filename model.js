@@ -1,6 +1,8 @@
 let model = {
     app: {
         currentPage: 'frontPage',
+        showCompaniesWithGic: false,
+        sectorToShow: '',
     },
     inputs: {
         stocks: [],
